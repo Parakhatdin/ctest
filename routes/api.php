@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\TelegramService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post("bot/" . env("TELEGRAM_BOT_TOKEN"), function (Request $request, TelegramService $service) {
+    return $service->hande($request);
 });

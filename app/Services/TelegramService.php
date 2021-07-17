@@ -31,7 +31,7 @@ class TelegramService
 
 
         // user registered
-        if ($user_meta = $this->user_service->checkUserAuth($telegram_id)->metaData()) {
+        if ($user_meta = $this->user_service->checkUserAuth($telegram_id)) {
             // user has FIO
             if ($this->user_service->hasFIO($user_meta)) {
                 // user has Birthday

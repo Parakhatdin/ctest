@@ -4,8 +4,7 @@
 namespace App\Services;
 
 
-use App\Models\User;
-use App\Models\UserMetaData;
+use App\Models\TUser;
 
 class UserService
 {
@@ -13,62 +12,62 @@ class UserService
     {
     }
 
-    public function checkUserAuth($telegram_id): UserMetaData
+    public function checkUserAuth($telegram_id): TUser
     {
-        return User::where("telegram_id", $telegram_id)->first();
+        return TUser::where("telegram_id", $telegram_id)->first();
     }
 
     /**
-     * @param UserMetaData $user_meta
+     * @param TUser $user
      * @return false
      */
-    public function hasFIO(UserMetaData $user_meta)
+    public function hasFIO(TUser $user)
     {
-        return $user_meta->fio != null;
+        return $user->fio != null;
     }
 
-    public function hasBirthday(UserMetaData $user_meta)
+    public function hasBirthday(TUser $user)
     {
-        return $user_meta->birthday != null;
+        return $user->birthday != null;
     }
 
-    public function hasGender(UserMetaData $user_meta)
+    public function hasGender(TUser $user)
     {
-        return $user_meta->gender != null;
+        return $user->gender != null;
     }
 
-    public function hasAddress(UserMetaData $user_meta)
+    public function hasAddress(TUser $user)
     {
-        return $user_meta->address != null;
+        return $user->address != null;
     }
 
-    public function hasPhoneNumber(UserMetaData $user_meta)
+    public function hasPhoneNumber(TUser $user)
     {
-        return $user_meta->phone_number != null;
+        return $user->phone_number != null;
     }
 
-    public function fillFIO(UserMetaData $user_meta, $data): void
+    public function fillFIO(TUser $user, $data): void
     {
-        $user_meta->fio = $data;
+        $user->fio = $data;
     }
 
-    public function fillBirthday(UserMetaData $user_meta, $data): void
+    public function fillBirthday(TUser $user, $data): void
     {
-        $user_meta->birthday = $data;
+        $user->birthday = $data;
     }
 
-    public function fillGender(UserMetaData $user_meta, $data): void
+    public function fillGender(TUser $user, $data): void
     {
-        $user_meta->gender = $data;
+        $user->gender = $data;
     }
 
-    public function fillAddress(UserMetaData $user_meta, $data): void
+    public function fillAddress(TUser $user, $data): void
     {
-        $user_meta->address = $data;
+        $user->address = $data;
     }
 
-    public function fillPhoneNumber(UserMetaData $user_meta, $data): void
+    public function fillPhoneNumber(TUser $user, $data): void
     {
-        $user_meta->phone_number = $data;
+        $user->phone_number = $data;
     }
 }

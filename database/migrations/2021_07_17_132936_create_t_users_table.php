@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserMetaDataTable extends Migration
+class CreateTUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateUserMetaDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_meta_data', function (Blueprint $table) {
+        Schema::create('t_users', function (Blueprint $table) {
             $table->id();
+            $table->string("telegram_id");
             $table->string("fio")->nullable();
             $table->string("birthday")->nullable();
             $table->enum("gender", ["male", "female"])->nullable();
             $table->string("address")->nullable();
             $table->string("phone_number")->nullable();
-            $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateUserMetaDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_meta_data');
+        Schema::dropIfExists('t_users');
     }
 }

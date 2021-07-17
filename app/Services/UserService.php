@@ -18,6 +18,11 @@ class UserService
         return TUser::where("telegram_id", $telegram_id)->first() != null;
     }
 
+    public function getUser($telegram_id)
+    {
+        return TUser::where("telegram_id", $telegram_id)->first();
+    }
+
     /**
      * @param TUser $user
      * @return false

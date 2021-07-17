@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class TUser extends Model
 {
     use HasFactory;
+
+    public $fillable = [
+        "telegram_id",
+        "fio",
+        "birthday",
+        "gender",
+        "address",
+        "phone_number"
+    ];
 }

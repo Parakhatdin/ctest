@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post("bot/" . env("TELEGRAM_BOT_TOKEN"), function (Request $request, TelegramService $service) {
-    return $service->hande($request);
+    return "rout is working";
+    $service->hande($request);
 });

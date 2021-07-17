@@ -31,7 +31,7 @@ class TelegramService
 
 
         // user registered
-        if ($user = $this->user_service->getUser($telegram_id)) {
+        if ($user = $this->user_service->checkUserAuth($telegram_id)) {
             // user has FIO
             if ($this->user_service->hasFIO($user)) {
                 // user has Birthday
@@ -60,11 +60,12 @@ class TelegramService
 
             $this->user_service->fillFIO($user, $content);
             $this->ask($telegram_id, "send me your birthday");
+        } else {
+            $this->user_service->storeUser($telegram_id);
+            $this->ask($telegram_id, "send me your fio");
         }
 
 
-        $this->user_service->storeUser($telegram_id);
-        $this->ask($telegram_id, "send me your fio");
     }
     public function ask($telegram_id, $message): void
     {

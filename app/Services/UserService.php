@@ -15,11 +15,6 @@ class UserService
 
     public function checkUserAuth($telegram_id)
     {
-        return TUser::where("telegram_id", $telegram_id)->first() != null;
-    }
-
-    public function getUser($telegram_id)
-    {
         return TUser::where("telegram_id", $telegram_id)->first();
     }
 

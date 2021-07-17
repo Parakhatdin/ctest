@@ -10,6 +10,7 @@ class UserService
 {
     public function storeUser($telegram_id): void
     {
+        TUser::create(["telegram_id" => $telegram_id]);
     }
 
     public function checkUserAuth($telegram_id)

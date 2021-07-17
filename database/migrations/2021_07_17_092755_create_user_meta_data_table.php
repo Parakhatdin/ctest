@@ -15,11 +15,12 @@ class CreateUserMetaDataTable extends Migration
     {
         Schema::create('user_meta_data', function (Blueprint $table) {
             $table->id();
-            $table->string("fio");
-            $table->string("birthday");
-            $table->enum("gender", ["male", "female"]);
-            $table->string("address");
-            $table->string("phone_number");
+            $table->string("fio")->nullable();
+            $table->string("birthday")->nullable();
+            $table->enum("gender", ["male", "female"])->nullable();
+            $table->string("address")->nullable();
+            $table->string("phone_number")->nullable();
+            $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

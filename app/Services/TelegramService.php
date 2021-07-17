@@ -31,34 +31,34 @@ class TelegramService
 
 
         // user registered
-        if ($user = $this->user_service->checkUserAuth(1)) {
+        if ($user_meta = $this->user_service->checkUserAuth($telegram_id)->metaData()) {
             // user has FIO
-            if ($this->user_service->hasFIO($user)) {
+            if ($this->user_service->hasFIO($user_meta)) {
                 // user has Birthday
-                if ($this->user_service->hasBirthday($user)) {
+                if ($this->user_service->hasBirthday($user_meta)) {
                     // user has Gender
-                    if ($this->user_service->hasGender($user)) {
+                    if ($this->user_service->hasGender($user_meta)) {
                         // user has Address
-                        if ($this->user_service->hasAddress($user)) {
+                        if ($this->user_service->hasAddress($user_meta)) {
                             // user has Phone Number
-                            if (! $this->user_service->hasPhoneNumber($user)) {
-                                $this->user_service->fillPhoneNumber($content);
+                            if (! $this->user_service->hasPhoneNumber($user_meta)) {
+                                $this->user_service->fillPhoneNumber($user_meta, $content);
                             }
                         }
 
-                        $this->user_service->fillAddress($content);
+                        $this->user_service->fillAddress($user_meta, $content);
                         $this->ask($telegram_id, "send me your phone number");
                     }
 
-                    $this->user_service->fillGender($content);
+                    $this->user_service->fillGender($user_meta, $content);
                     $this->ask($telegram_id, "send me your address");
                 }
 
-                $this->user_service->fillBirthday($content);
+                $this->user_service->fillBirthday($user_meta, $content);
                 $this->ask($telegram_id, "send me your gender");
             }
 
-            $this->user_service->fillFIO($content);
+            $this->user_service->fillFIO($user_meta, $content);
             $this->ask($telegram_id, "send me your birthday");
         }
 

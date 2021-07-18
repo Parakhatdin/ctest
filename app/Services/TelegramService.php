@@ -27,9 +27,9 @@ class TelegramService
     {
         $content = json_decode($request->getContent(), true);
         $telegram_id = Arr::get($content, "message.from.id");
+        $text = Arr::get($content, "message.text", "no");
 
         $this->ask($telegram_id, json_encode($content));
-        return;
 
 
         // user registered
@@ -48,19 +48,19 @@ class TelegramService
                             }
                         }
 
-                        $this->user_service->fillAddress($user, $content);
+                        $this->user_service->fillAddress($user, $text);
                         $this->ask($telegram_id, "send me your phone number");
                     }
 
-                    $this->user_service->fillGender($user, $content);
+                    $this->user_service->fillGender($user, $text);
                     $this->ask($telegram_id, "send me your address");
                 }
 
-                $this->user_service->fillBirthday($user, $content);
+                $this->user_service->fillBirthday($user, $text);
                 $this->ask($telegram_id, "send me your gender");
             }
 
-            $this->user_service->fillFIO($user, $content);
+            $this->user_service->fillFIO($user, $text);
             $this->ask($telegram_id, "send me your birthday");
         } else {
             $this->user_service->storeUser($telegram_id);

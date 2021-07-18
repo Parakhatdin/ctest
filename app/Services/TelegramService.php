@@ -43,7 +43,8 @@ class TelegramService
                         if ($this->user_service->hasAddress($user)) {
                             // user has Phone Number
                             if (! $this->user_service->hasPhoneNumber($user)) {
-                                $this->user_service->fillPhoneNumber($user, $content);
+                                $this->user_service->fillPhoneNumber($user, $text);
+                                $this->ask($telegram_id, "thanks !");
                             } else {
                                 $this->ask($telegram_id, "you are already registered");
                             }

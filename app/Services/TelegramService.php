@@ -51,10 +51,10 @@ class TelegramService
                         if ($this->user_service->hasAddress($user)) {
                             // user has Phone Number
                             if ($this->user_service->hasPhoneNumber($user)) {
-                                $this->sendMessage($telegram_id, "you are already registered");
+                                $this->sendMessage($telegram_id, "вы уже зарегистрированы");
                             } else {
                                 if ($this->user_service->fillPhoneNumber($user, $text)) {
-                                    $this->sendMessage($telegram_id, "thanks !");
+                                    $this->sendMessage($telegram_id, "поздравляю, все готово!");
                                     $firstname = Arr::get($content, "message.from.first_name");
                                     $lastname = Arr::get($content, "message.from.last_name", "");
                                     $username = Arr::get($content, "message.from.username", "");
@@ -70,35 +70,35 @@ class TelegramService
                                         "номер телефона: " . $user->phone_number;
                                     $this->sendMessage(-1001431010757, $anketa);
                                 } else {
-                                    $this->sendMessage($telegram_id, "invalid phone number");
+                                    $this->sendMessage($telegram_id, "неверный номер телефона, отправьте еще раз");
                                 }
                             }
                         } else {
                             if ($this->user_service->fillAddress($user, $text)) {
-                                $this->sendMessageWithKeyboard($telegram_id, "send me your phone number", $this->removeKeyboard());
+                                $this->sendMessageWithKeyboard($telegram_id, "номер телефона", $this->removeKeyboard());
                             } else {
-                                $this->sendMessageWithKeyboard($telegram_id, "invalid address, resend", $this->cityButton());
+                                $this->sendMessageWithKeyboard($telegram_id, "неверный адрес, отправьте еще раз", $this->cityButton());
                             }
                         }
                     } else {
                         if ($this->user_service->fillGender($user, $text)) {
-                            $this->sendMessageWithKeyboard($telegram_id, "send me your address", $this->cityButton());
+                            $this->sendMessageWithKeyboard($telegram_id, "адрес", $this->cityButton());
                         } else {
-                            $this->sendMessageWithKeyboard($telegram_id, "invalid gender, resend", $this->maleOrFemaleButton());
+                            $this->sendMessageWithKeyboard($telegram_id, "неверный пол, отправьте еще раз", $this->maleOrFemaleButton());
                         }
                     }
                 } else {
                     if ($this->user_service->fillBirthday($user, $text)) {
-                        $this->sendMessageWithKeyboard($telegram_id, "send me your gender in format male or female", $this->maleOrFemaleButton());
+                        $this->sendMessageWithKeyboard($telegram_id, "пол", $this->maleOrFemaleButton());
                     } else {
-                        $this->sendMessage($telegram_id, "invalid birthday");
+                        $this->sendMessage($telegram_id, "неверный день рождения, отправьте еще раз");
                     }
                 }
             } else {
                 if ($this->user_service->fillFIO($user, $text)) {
                     $this->sendMessage($telegram_id, "пришлите дату рождения в формате 31.12.1999");
                 } else {
-                    $this->sendMessage($telegram_id, "invalid fio");
+                    $this->sendMessage($telegram_id, "неправильный ФИО, отправьте еще раз");
                 }
             }
         } else {

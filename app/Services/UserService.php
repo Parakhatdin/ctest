@@ -59,7 +59,7 @@ class UserService
 
     public function fillBirthday(TUser $user, $data)
     {
-        if (DateTime::createFromFormat("d.m.Y", $data) && DateTime::createFromFormat("d.m.Y", $data)->format("d.m.Y")) {
+        if (DateTime::createFromFormat("d.m.Y", $data) && DateTime::createFromFormat("d.m.Y", $data)->format("d.m.Y") == $data) {
             $user->birthday = $data;
             return $user->save();
         }

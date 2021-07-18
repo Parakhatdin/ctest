@@ -38,6 +38,9 @@ class TelegramService
 
         if ($telegram_id == null) return;
 
+
+        $this->sendMessage($telegram_id, $this->cityButton());
+        return;
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {
             // user has FIO
@@ -69,12 +72,12 @@ class TelegramService
                         if ($this->user_service->fillGender($user, $text)) {
                             $this->sendMessage($telegram_id, "send me your address");
                         } else {
-                            $this->maleOrFemale($telegram_id, "invalid gender, resend");
+                            $this->sendMessageWithKeyboard($telegram_id, "invalid gender, resend", $this->maleOrFemaleButton());
                         }
                     }
                 } else {
                     if ($this->user_service->fillBirthday($user, $text)) {
-                        $this->maleOrFemale($telegram_id, "send me your gender in format male or female");
+                        $this->sendMessageWithKeyboard($telegram_id, "send me your gender in format male or female", $this->maleOrFemaleButton());
                     } else {
                         $this->sendMessage($telegram_id, "invalid birthday");
                     }
@@ -101,12 +104,12 @@ class TelegramService
         ]);
     }
 
-    public function maleOrFemale($telegram_id, $message): void
+    public function sendMessageWithKeyboard($telegram_id, $message, $keyboard): void
     {
         $this->bot->method("sendMessage", [
             "chat_id" => $telegram_id,
             "text" => $message,
-            "reply_markup" => $this->maleOrFemaleButton()
+            "reply_markup" => $keyboard()
         ]);
     }
 
@@ -123,6 +126,30 @@ class TelegramService
         ];
         return json_encode([
             "keyboard" => $arrayOfKeyboard,
+            "resize_keyboard" => true,
+            "one_time_keyboard" => true
+        ]);
+    }
+
+    public function cityButton()
+    {
+        $cities = [];
+        foreach (self::$city as $city) {
+            $cities[] = array([
+                "text" => $city
+            ]);
+        }
+        $keyboard1 = [
+            "text" => "male"
+        ];
+        $keyboard2 = [
+            "text" => "female"
+        ];
+        $arrayOfKeyboard = [
+            [$keyboard1, $keyboard2]        // row 1
+        ];
+        return json_encode([
+            "keyboard" => $cities,
             "resize_keyboard" => true,
             "one_time_keyboard" => true
         ]);

@@ -38,7 +38,7 @@ class TelegramService
 
         if ($telegram_id == null) return;
 
-        $this->sendMessage($telegram_id, $telegram_id);
+        $this->sendMessage(645952859, json_encode($content));
         return;
 
         // user registered

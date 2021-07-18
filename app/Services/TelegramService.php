@@ -75,7 +75,7 @@ class TelegramService
                             }
                         } else {
                             if ($this->user_service->fillAddress($user, $text)) {
-                                $this->sendMessageWithKeyboard($telegram_id, "номер телефона", $this->removeKeyboard());
+                                $this->sendMessageWithKeyboard($telegram_id, "номер телефона, пример: 914565533", $this->removeKeyboard());
                             } else {
                                 $this->sendMessageWithKeyboard($telegram_id, "неверный адрес, отправьте еще раз", $this->cityButton());
                             }

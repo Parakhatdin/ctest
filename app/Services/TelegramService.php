@@ -29,7 +29,7 @@ class TelegramService
         $telegram_id = Arr::get($content, "message.from.id");
         $text = Arr::get($content, "message.text", "no");
 
-
+        if ($telegram_id == null) return;
 
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {

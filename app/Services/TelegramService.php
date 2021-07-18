@@ -53,12 +53,16 @@ class TelegramService
                             $this->sendMessage($telegram_id, "send me your phone number");
                         }
                     } else {
-                        $this->user_service->fillGender($user, $text);
-                        $this->sendMessage($telegram_id, "send me your address");
+                        if ($this->user_service->fillGender($user, $text)) {
+                            $this->sendMessage($telegram_id, "send me your address");
+                        } else {
+                            $this->sendMessage($telegram_id, "invalid gender");
+                        }
+
                     }
                 } else {
                     if ($this->user_service->fillBirthday($user, $text)) {
-                        $this->sendMessage($telegram_id, "send me your gender");
+                        $this->sendMessage($telegram_id, "send me your gender in format male or female");
                     } else {
                         $this->sendMessage($telegram_id, "invalid birthday");
                     }

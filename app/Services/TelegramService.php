@@ -63,7 +63,7 @@ class TelegramService
                             if ($this->user_service->fillAddress($user, $text)) {
                                 $this->sendMessage($telegram_id, "send me your phone number");
                             } else {
-                                $this->sendMessageWithKeyboard($telegram_id, "invalid address, resend");
+                                $this->sendMessageWithKeyboard($telegram_id, "invalid address, resend", $this->cityButton());
                             }
                         }
                     } else {

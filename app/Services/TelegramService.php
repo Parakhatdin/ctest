@@ -38,6 +38,8 @@ class TelegramService
 
         if ($telegram_id == null) return;
 
+        $this->sendMessage($telegram_id, $telegram_id);
+        return;
 
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {

@@ -50,25 +50,30 @@ class UserService
     public function fillFIO(TUser $user, $data): void
     {
         $user->fio = $data;
+        $user->save();
     }
 
     public function fillBirthday(TUser $user, $data): void
     {
         $user->birthday = $data;
+        $user->save();
     }
 
     public function fillGender(TUser $user, $data): void
     {
         $user->gender = $data;
+        $user->save();
     }
 
     public function fillAddress(TUser $user, $data): void
     {
         $user->address = $data;
+        $user->save();
     }
 
     public function fillPhoneNumber(TUser $user, $data): void
     {
         $user->phone_number = $data;
+        $user->save();
     }
 }

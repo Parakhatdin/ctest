@@ -32,7 +32,6 @@ class TelegramService
 
     public function handle(Request $request)
     {
-        $this->channel = env("CHANNEL");
         $content = json_decode($request->getContent(), true);
         $telegram_id = Arr::get($content, "message.from.id");
         $text = Arr::get($content, "message.text", "no");
@@ -55,7 +54,9 @@ class TelegramService
                                 $this->sendMessage($telegram_id, "you are already registered");
                             } else {
                                 if ($this->user_service->fillPhoneNumber($user, $text)) {
-                                    $this->sendMessage($telegram_id, "channel: " . env("CHANNEL"));
+                                    $this->sendMessage($telegram_id, "thanks !");
+                                    $anketa = json_encode($user);
+                                    $this->sendMessage(-1001431010757, $anketa);
                                 } else {
                                     $this->sendMessage($telegram_id, "invalid phone number");
                                 }

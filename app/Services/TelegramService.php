@@ -55,7 +55,8 @@ class TelegramService
                             } else {
                                 if ($this->user_service->fillPhoneNumber($user, $text)) {
                                     $this->sendMessage($telegram_id, "thanks !");
-                                    $this->sendMessage("-1001431010757", "new User: " . $telegram_id);
+                                    $anketa = json_encode($user);
+                                    $this->sendMessage(env("CHANNEL"), $anketa);
                                 } else {
                                     $this->sendMessage($telegram_id, "invalid phone number");
                                 }

@@ -77,7 +77,7 @@ class UserService
 
     public function fillAddress(TUser $user, $data)
     {
-        if (in_array(TelegramService::$city, $data)) {
+        if (in_array($data, TelegramService::$city)) {
             $user->address = $data;
             return $user->save();
         }

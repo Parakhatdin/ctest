@@ -28,7 +28,7 @@ class TelegramService
         $content = json_decode($request->getContent(), true);
         $telegram_id = Arr::get($content, "message.from.id");
 
-        $this->ask($telegram_id, $content);
+        $this->ask($telegram_id, json_encode($content));
         return;
 
 

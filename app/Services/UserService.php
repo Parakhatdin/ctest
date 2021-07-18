@@ -86,7 +86,7 @@ class UserService
 
     public function fillPhoneNumber(TUser $user, $data)
     {
-        if (strlen($data) > 9) {
+        if (strlen($data) == 9) {
             $user->phone_number = $data;
             return $user->save();
         }

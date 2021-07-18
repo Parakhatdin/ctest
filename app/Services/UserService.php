@@ -66,10 +66,13 @@ class UserService
         return false;
     }
 
-    public function fillGender(TUser $user, $data): void
+    public function fillGender(TUser $user, $data)
     {
-        $user->gender = $data;
-        $user->save();
+        if (in_array($data, ["male", "female"])) {
+            $user->gender = $data;
+            return $user->save();
+        }
+        return false;
     }
 
     public function fillAddress(TUser $user, $data): void

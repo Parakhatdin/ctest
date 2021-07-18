@@ -59,8 +59,9 @@ class TelegramService
                 } else {
                     if ($this->user_service->fillBirthday($user, $text)) {
                         $this->sendMessage($telegram_id, "send me your gender");
+                    } else {
+                        $this->sendMessage($telegram_id, "invalid birthday");
                     }
-                    $this->sendMessage($telegram_id, "invalid birthday");
                 }
             } else {
                 if ($this->user_service->fillFIO($user, $text)) {

@@ -39,8 +39,6 @@ class TelegramService
         if ($telegram_id == null) return;
 
 
-        $this->sendMessage($telegram_id, $this->cityButton());
-        return;
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {
             // user has FIO
@@ -65,12 +63,12 @@ class TelegramService
                             if ($this->user_service->fillAddress($user, $text)) {
                                 $this->sendMessage($telegram_id, "send me your phone number");
                             } else {
-                                $this->sendMessage($telegram_id, "invalid address");
+                                $this->sendMessageWithKeyboard($telegram_id, "invalid address, resend");
                             }
                         }
                     } else {
                         if ($this->user_service->fillGender($user, $text)) {
-                            $this->sendMessage($telegram_id, "send me your address");
+                            $this->sendMessageWithKeyboard($telegram_id, "send me your address", $this->cityButton());
                         } else {
                             $this->sendMessageWithKeyboard($telegram_id, "invalid gender, resend", $this->maleOrFemaleButton());
                         }

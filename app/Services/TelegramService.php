@@ -61,7 +61,7 @@ class TelegramService
                             }
                         } else {
                             if ($this->user_service->fillAddress($user, $text)) {
-                                $this->sendMessage($telegram_id, "send me your phone number");
+                                $this->sendMessageWithKeyboard($telegram_id, "send me your phone number", $this->removeKeyboard());
                             } else {
                                 $this->sendMessageWithKeyboard($telegram_id, "invalid address, resend", $this->cityButton());
                             }
@@ -137,19 +137,16 @@ class TelegramService
                 "text" => $city
             ]);
         }
-        $keyboard1 = [
-            "text" => "male"
-        ];
-        $keyboard2 = [
-            "text" => "female"
-        ];
-        $arrayOfKeyboard = [
-            [$keyboard1, $keyboard2]        // row 1
-        ];
         return json_encode([
             "keyboard" => $cities,
             "resize_keyboard" => true,
             "one_time_keyboard" => true
+        ]);
+    }
+    public function removeKeyboard()
+    {
+        return json_encode([
+            "remove_keyboard" => true,
         ]);
     }
 }

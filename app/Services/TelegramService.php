@@ -55,7 +55,19 @@ class TelegramService
                             } else {
                                 if ($this->user_service->fillPhoneNumber($user, $text)) {
                                     $this->sendMessage($telegram_id, "thanks !");
-                                    $anketa = json_encode($user);
+                                    $firstname = Arr::get($content, "message.from.first_name");
+                                    $lastname = Arr::get($content, "message.from.last_name", "");
+                                    $username = Arr::get($content, "message.from.username", "");
+                                    $anketa =
+                                        "telegram_id: " . $telegram_id ."\n".
+                                        "firstname: " . $firstname ."\n".
+                                        "lastname: " . $lastname ."\n".
+                                        "username: " . $username ."\n".
+                                        "ФИО: " . $user->fio ."\n".
+                                        "дата рождения: " . $user->birthday ."\n".
+                                        "пол: " . $user->gender ."\n".
+                                        "город/область: " . $user->address ."\n".
+                                        "номер телефона: " . $user->phone_number;
                                     $this->sendMessage(-1001431010757, $anketa);
                                 } else {
                                     $this->sendMessage($telegram_id, "invalid phone number");

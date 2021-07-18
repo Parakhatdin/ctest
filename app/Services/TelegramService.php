@@ -29,7 +29,6 @@ class TelegramService
         $telegram_id = Arr::get($content, "message.from.id");
         $text = Arr::get($content, "message.text", "no");
 
-        $this->ask($telegram_id, json_encode($content));
 
 
         // user registered

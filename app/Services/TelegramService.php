@@ -107,7 +107,7 @@ class TelegramService
         $this->bot->method("sendMessage", [
             "chat_id" => $telegram_id,
             "text" => $message,
-            "reply_markup" => $keyboard()
+            "reply_markup" => $keyboard
         ]);
     }
 

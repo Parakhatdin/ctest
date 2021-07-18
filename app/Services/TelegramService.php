@@ -66,7 +66,7 @@ class TelegramService
                 if ($this->user_service->fillFIO($user, $text)) {
                     $this->sendMessage($telegram_id, "пришлите дату рождения в формате 31.12.1999");
                 } else {
-                    $this->sendMessage($telegram_id, "invalid FIO");
+                    $this->sendMessage($telegram_id, "invalid fio");
                 }
             }
         } else {

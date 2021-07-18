@@ -75,15 +75,21 @@ class UserService
         return false;
     }
 
-    public function fillAddress(TUser $user, $data): void
+    public function fillAddress(TUser $user, $data)
     {
-        $user->address = $data;
-        $user->save();
+        if (in_array(TelegramService::$city, $data)) {
+            $user->address = $data;
+            return $user->save();
+        }
+        return false;
     }
 
-    public function fillPhoneNumber(TUser $user, $data): void
+    public function fillPhoneNumber(TUser $user, $data)
     {
-        $user->phone_number = $data;
-        $user->save();
+        if (strlen($data) > 9) {
+            $user->phone_number = $data;
+            return $user->save();
+        }
+        return false;
     }
 }

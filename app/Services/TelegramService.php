@@ -13,6 +13,13 @@ class TelegramService
     public $user_service;
     public $bot;
 
+    public static $city = [
+        "Nukus",
+        "Tashkent",
+        "Samarkand"
+    ];
+
+
     /**
      * TelegramService constructor.
      * @param UserService $user_service
@@ -42,15 +49,21 @@ class TelegramService
                         // user has Address
                         if ($this->user_service->hasAddress($user)) {
                             // user has Phone Number
-                            if (! $this->user_service->hasPhoneNumber($user)) {
-                                $this->user_service->fillPhoneNumber($user, $text);
-                                $this->sendMessage($telegram_id, "thanks !");
-                            } else {
+                            if ($this->user_service->hasPhoneNumber($user)) {
                                 $this->sendMessage($telegram_id, "you are already registered");
+                            } else {
+                                if ($this->user_service->fillPhoneNumber($user, $text)) {
+                                    $this->sendMessage($telegram_id, "thanks !");
+                                } else {
+                                    $this->sendMessage($telegram_id, "invalid phone number");
+                                }
                             }
                         } else {
-                            $this->user_service->fillAddress($user, $text);
-                            $this->sendMessage($telegram_id, "send me your phone number");
+                            if ($this->user_service->fillAddress($user, $text)) {
+                                $this->sendMessage($telegram_id, "send me your phone number");
+                            } else {
+                                $this->sendMessage($telegram_id, "invalid address");
+                            }
                         }
                     } else {
                         if ($this->user_service->fillGender($user, $text)) {
@@ -58,7 +71,6 @@ class TelegramService
                         } else {
                             $this->sendMessage($telegram_id, "invalid gender");
                         }
-
                     }
                 } else {
                     if ($this->user_service->fillBirthday($user, $text)) {

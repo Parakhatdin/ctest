@@ -69,12 +69,12 @@ class TelegramService
                         if ($this->user_service->fillGender($user, $text)) {
                             $this->sendMessage($telegram_id, "send me your address");
                         } else {
-                            $this->sendMessage($telegram_id, "invalid gender");
+                            $this->maleOrFemale($telegram_id, "invalid gender, resend");
                         }
                     }
                 } else {
                     if ($this->user_service->fillBirthday($user, $text)) {
-                        $this->sendMessage($telegram_id, "send me your gender in format male or female");
+                        $this->maleOrFemale($telegram_id, "send me your gender in format male or female");
                     } else {
                         $this->sendMessage($telegram_id, "invalid birthday");
                     }
@@ -101,4 +101,30 @@ class TelegramService
         ]);
     }
 
+    public function maleOrFemale($telegram_id, $message): void
+    {
+        $this->bot->method("sendMessage", [
+            "chat_id" => $telegram_id,
+            "text" => $message,
+            "reply_markup" => $this->maleOrFemaleButton()
+        ]);
+    }
+
+    public function maleOrFemaleButton()
+    {
+        $keyboard1 = [
+            "text" => "male"
+        ];
+        $keyboard2 = [
+            "text" => "female"
+        ];
+        $arrayOfKeyboard = [
+            [$keyboard1, $keyboard2]        // row 1
+        ];
+        return json_encode([
+            "keyboard" => $arrayOfKeyboard,
+            "resize_keyboard" => true,
+            "one_time_keyboard" => true
+        ]);
+    }
 }

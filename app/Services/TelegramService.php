@@ -38,8 +38,6 @@ class TelegramService
 
         if ($telegram_id == null) return;
 
-        $this->sendMessage(645952859, json_encode($content));
-        return;
 
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {
@@ -57,6 +55,7 @@ class TelegramService
                             } else {
                                 if ($this->user_service->fillPhoneNumber($user, $text)) {
                                     $this->sendMessage($telegram_id, "thanks !");
+                                    $this->sendMessage("-1001431010757", "new User: " . $telegram_id);
                                 } else {
                                     $this->sendMessage($telegram_id, "invalid phone number");
                                 }

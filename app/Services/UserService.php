@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\TUser;
+use DateTime;
 
 class UserService
 {
@@ -47,16 +48,22 @@ class UserService
         return $user->phone_number != null;
     }
 
-    public function fillFIO(TUser $user, $data): void
+    public function fillFIO(TUser $user, $data)
     {
-        $user->fio = $data;
-        $user->save();
+        if (strlen($data) > 5) {
+            $user->fio = $data;
+            return $user->save();
+        }
+        return false;
     }
 
-    public function fillBirthday(TUser $user, $data): void
+    public function fillBirthday(TUser $user, $data)
     {
-        $user->birthday = $data;
-        $user->save();
+        if (DateTime::createFromFormat("d.m.Y", $data)->format("d.m.Y") == $data) {
+            $user->birthday = $data;
+            return $user->save();
+        }
+        return false;
     }
 
     public function fillGender(TUser $user, $data): void

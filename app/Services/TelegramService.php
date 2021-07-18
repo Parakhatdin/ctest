@@ -44,34 +44,39 @@ class TelegramService
                             // user has Phone Number
                             if (! $this->user_service->hasPhoneNumber($user)) {
                                 $this->user_service->fillPhoneNumber($user, $text);
-                                $this->ask($telegram_id, "thanks !");
+                                $this->sendMessage($telegram_id, "thanks !");
                             } else {
-                                $this->ask($telegram_id, "you are already registered");
+                                $this->sendMessage($telegram_id, "you are already registered");
                             }
                         } else {
                             $this->user_service->fillAddress($user, $text);
-                            $this->ask($telegram_id, "send me your phone number");
+                            $this->sendMessage($telegram_id, "send me your phone number");
                         }
                     } else {
                         $this->user_service->fillGender($user, $text);
-                        $this->ask($telegram_id, "send me your address");
+                        $this->sendMessage($telegram_id, "send me your address");
                     }
                 } else {
-                    $this->user_service->fillBirthday($user, $text);
-                    $this->ask($telegram_id, "send me your gender");
+                    if ($this->user_service->fillBirthday($user, $text)) {
+                        $this->sendMessage($telegram_id, "send me your gender");
+                    }
+                    $this->sendMessage($telegram_id, "invalid birthday");
                 }
             } else {
-                $this->user_service->fillFIO($user, $text);
-                $this->ask($telegram_id, "send me your birthday");
+                if ($this->user_service->fillFIO($user, $text)) {
+                    $this->sendMessage($telegram_id, "пришлите дату рождения в формате 31.12.1999");
+                } else {
+                    $this->sendMessage($telegram_id, "invalid FIO");
+                }
             }
         } else {
             $this->user_service->storeUser($telegram_id);
-            $this->ask($telegram_id, "send me your fio");
+            $this->sendMessage($telegram_id, "добро пожаловать в чат-бот Click. пожалуйста, пришлите свое ФИО");
         }
 
 
     }
-    public function ask($telegram_id, $message): void
+    public function sendMessage($telegram_id, $message): void
     {
         $this->bot->method("sendMessage", [
             "chat_id" => $telegram_id,

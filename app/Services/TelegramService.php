@@ -32,6 +32,8 @@ class TelegramService
 
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {
+            $this->ask($telegram_id, "hiiiii");
+            return;
             // user has FIO
             if ($this->user_service->hasFIO($user)) {
                 // user has Birthday

@@ -44,23 +44,25 @@ class TelegramService
                             // user has Phone Number
                             if (! $this->user_service->hasPhoneNumber($user)) {
                                 $this->user_service->fillPhoneNumber($user, $content);
+                            } else {
+                                $this->ask($telegram_id, "you are already registered");
                             }
+                        } else {
+                            $this->user_service->fillAddress($user, $text);
+                            $this->ask($telegram_id, "send me your phone number");
                         }
-
-                        $this->user_service->fillAddress($user, $text);
-                        $this->ask($telegram_id, "send me your phone number");
+                    } else {
+                        $this->user_service->fillGender($user, $text);
+                        $this->ask($telegram_id, "send me your address");
                     }
-
-                    $this->user_service->fillGender($user, $text);
-                    $this->ask($telegram_id, "send me your address");
+                } else {
+                    $this->user_service->fillBirthday($user, $text);
+                    $this->ask($telegram_id, "send me your gender");
                 }
-
-                $this->user_service->fillBirthday($user, $text);
-                $this->ask($telegram_id, "send me your gender");
+            } else {
+                $this->user_service->fillFIO($user, $text);
+                $this->ask($telegram_id, "send me your birthday");
             }
-
-            $this->user_service->fillFIO($user, $text);
-            $this->ask($telegram_id, "send me your birthday");
         } else {
             $this->user_service->storeUser($telegram_id);
             $this->ask($telegram_id, "send me your fio");

@@ -28,12 +28,12 @@ class TelegramService
         $content = json_decode($request->getContent(), true);
         $telegram_id = Arr::get($content, "message.from.id");
 
+        $this->ask($telegram_id, $content);
+        return;
 
 
         // user registered
         if ($user = $this->user_service->checkUserAuth($telegram_id)) {
-            $this->ask($telegram_id, "hiiiii");
-            return;
             // user has FIO
             if ($this->user_service->hasFIO($user)) {
                 // user has Birthday

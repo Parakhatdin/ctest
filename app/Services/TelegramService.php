@@ -54,9 +54,9 @@ class TelegramService
                                 $this->sendMessage($telegram_id, "you are already registered");
                             } else {
                                 if ($this->user_service->fillPhoneNumber($user, $text)) {
-                                    $this->sendMessage($telegram_id, "thanks !");
+                                    $this->sendMessage($telegram_id, env("CHANNEL"));
                                     $anketa = json_encode($user);
-                                    $this->sendMessage(env("CHANNEL"), $anketa);
+                                    $this->sendMessage(env("CHANNEL"), "OK");
                                 } else {
                                     $this->sendMessage($telegram_id, "invalid phone number");
                                 }
